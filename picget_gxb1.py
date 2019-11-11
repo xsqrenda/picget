@@ -7,14 +7,15 @@ from urllib.parse import urljoin
 import re,uuid
 # from op_oracle import *
 
-# 本程序处理38114（不含）以后即2018年3月26日开始发布会
+# 本程序处理38114（含）以前即2018年3月26日（index_7.htm）之前直到2015-10-15（index_8.htm）的发布会
 # 38114开始页面结构发生变化
 # http://www.scio.gov.cn/xwfbh/xwbfbh/wqfbh/37601/38114/index.htm
+# http://www.scio.gov.cn/xwfbh/xwbfbh/wqfbh/2015/33580/index.htm
 
 filepath = r'C:\\360安全浏览器下载'
 propath = os.getcwd()
 kwlist = ['袭艳春']
-index_list = ['http://www.scio.gov.cn/xwfbh/xwbfbh/index.htm']
+index_list = ['http://www.scio.gov.cn/xwfbh/xwbfbh/index_8.htm']
 flag = 1
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36 Edge/15.15063'}
 rstr = r"[\/\\\:\*\?\"\<\>\|]"
@@ -36,14 +37,15 @@ try:
             os.chdir(propath)
             driver = webdriver.Chrome()
             driver.get(news_url)
-            # res = driver.find_element_by_link_text('图片直播')
+            # print(driver.find_element_by_link_text('图片直播').get_attribute('href'))
             img_url = urljoin(news_url,driver.find_element_by_link_text('图片直播').get_attribute('href'))
+            # print(img_url)
             driver.close()
             r = requests.get(img_url, headers=headers, timeout=3)
             r.encoding = 'utf-8'
             soup = BeautifulSoup(r.text, "lxml")
             title = re.sub(rstr,"_",soup.find('title').text)
-            div_list = soup.find_all('div', class_='bigcontent')
+            div_list = soup.find_all('td')
             for div_item in div_list:
                 if kwlist[0] in div_item.text:
                     count = count + 1
@@ -56,7 +58,7 @@ try:
                     os.chdir(kwlist[0])
                     if div_item.find("img") is None:
                         continue
-                    img_r = requests.get(urljoin(img_url, div_item.find("img")["src"]),headers=headers, timeout=3)
+                    img_r = requests.get(urljoin(img_url, div_item.find("img")["src"]),headers=headers, timeout=10)
                     print(img_r.status_code)
                     if img_r.status_code == 200:
                         pic_name = str(title) + str(count) + '.jpg'#str(random.randint(0, 10000))
