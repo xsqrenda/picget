@@ -21,15 +21,22 @@ import re,uuid
 filepath = r'C:\\360安全浏览器下载'
 propath = os.getcwd()
 kwlist = ['袭艳春']
-index_list = ['http://www.scio.gov.cn/xwfbh/xwbfbh/index.htm']
+index_list = ['http://www.scio.gov.cn/xwfbh/xwbfbh/index_1.htm']
+flag = 1
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36 Edge/15.15063'}
 rstr = r"[\/\\\:\*\?\"\<\>\|]"
 try:
-    for index_item in index_list:
+    index_item = index_list[0]
+    while flag ==1 :
         r = requests.get(index_item, headers=headers, timeout=3)
         r.encoding = 'utf-8'
         soup = BeautifulSoup(r.text, "lxml")
         news_list = soup.find_all(href=re.compile('fbh/Document/'))
+        np = soup.find('a', text='下一页')
+        if np:
+            index_item = urljoin(r.url, np.get('href'))
+        else:
+            flag = 0
         for news_item in news_list:
             news_url = urljoin(index_item, news_item.get('href'))
             os.chdir(propath)
