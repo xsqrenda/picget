@@ -23,6 +23,7 @@ propath = os.getcwd()
 kwlist = ['袭艳春']
 index_list = ['http://www.scio.gov.cn/xwfbh/xwbfbh/index.htm']
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36 Edge/15.15063'}
+rstr = r"[\/\\\:\*\?\"\<\>\|]"
 try:
     for index_item in index_list:
         r = requests.get(index_item, headers=headers, timeout=3)
@@ -40,6 +41,7 @@ try:
             r = requests.get(img_url, headers=headers, timeout=3)
             r.encoding = 'utf-8'
             soup = BeautifulSoup(r.text, "lxml")
+            title = re.sub(rstr,"_",soup.find('title').text)
             div_list = soup.find_all('div', class_='bigcontent')
             for div_item in div_list:
                 if kwlist[0] in div_item.text:
@@ -49,15 +51,17 @@ try:
                         print(kwlist[0], '文件夹已经存在了，不再创建')
                     else:
                         os.makedirs(kwlist[0])
+                    os.chdir(kwlist[0])
                     if div_item.find("img") is None:
                         continue
                     img_r = requests.get(urljoin(img_url, div_item.find("img")["src"]),headers=headers, timeout=3)
                     print(img_r.status_code)
                     if img_r.status_code == 200:
-                        pic_name = str(random.randint(0, 10000)) + '.jpg'#str(soup.title)
+                        pic_name = str(title) + str(random.randint(0, 10000)) + '.jpg'#
                         open(pic_name, 'wb').write(img_r.content)
                         print("Success!"+ div_item.text)
                     # print(div_item.text)
                 pass
 finally:
     pass
+
