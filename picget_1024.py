@@ -19,11 +19,11 @@ from op_oracle import *
 # LXV0,81
 # rooturl = 'http://1024.c2048ao.pw/'
 rooturl = 'http://1024.c2048ao.pw/pw/'
-avkeylist = ['LXV0','259LUXU','LXVS','prestige','古装']
+avkeylist = ['259LUXU','LXV0','LXVS','prestige','古装']
 clkeylist = ['最新合集']
 # clkey1 = '日本騎兵'正片大片
 urlkey = 'thread'
-m = 1
+m = 4
 n = 10
 rtpath = os.getcwd()
 r = requests.get(rooturl)
@@ -97,6 +97,8 @@ def downlaodimg(url,m,n,key,rtpath):
                         open(pic_name, 'wb').write(ir.content)
                         print("Success!" + temp5)
                         t += 1     
+
+
 for url in urllist:
     for key in avkeylist:
         downlaodimg(url,m,n,key,rtpath)

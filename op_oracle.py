@@ -1,5 +1,6 @@
 import cx_Oracle,os
 
+
 def wr_beauty(uid,keyword,url,title):
     try:
         os.environ['NLS_LANG'] = "SIMPLIFIED CHINESE_CHINA.AL32UTF8" #设置Oracle语言编码变量，非常重要
