@@ -1,0 +1,2 @@
+Path=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;D:\program\instantclient_11_2;D:\program\Git\cmd;D:\program\TortoiseGit\bin;D:\program\Tesseract-OCR\tessdata;D:\program\Tesseract-OCR
+TESSDATA_PREFIX=D:\program\Tesseract-OCR\tessdata

@@ -63,7 +63,8 @@ try:
                         for root, dirs, files in os.walk(os.getcwd()):
                             if pic_name in files:
                                 print("已下载" + pic_name)
-                                sys.exit(0)
+                                continue
+                                # sys.exit(0)
                         open(pic_name, 'wb').write(img_r.content)
                         print("Success!" + div_item.text)
                     # print(div_item.text)
