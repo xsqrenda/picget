@@ -17,11 +17,12 @@ kwlist = ['袭艳春']
 index_list = ['http://www.scio.gov.cn/xwfbh/xwbfbh/index.htm']
 flag = 1
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36 Edge/15.15063'}
+timeout=10
 rstr = r"[\/\\\:\*\?\"\<\>\|]"
 try:
     index_item = index_list[0]
     while flag == 1:
-        r = requests.get(index_item, headers=headers, timeout=3)
+        r = requests.get(index_item, headers=headers, timeout=timeout)
         r.encoding = 'utf-8'
         soup = BeautifulSoup(r.text, "lxml")
         news_list = soup.find_all(href=re.compile('fbh/Document/'))
@@ -39,7 +40,7 @@ try:
             # res = driver.find_element_by_link_text('图片直播')
             img_url = urljoin(news_url,driver.find_element_by_link_text('图片直播').get_attribute('href'))
             driver.close()
-            r = requests.get(img_url, headers=headers, timeout=3)
+            r = requests.get(img_url, headers=headers, timeout=timeout)
             r.encoding = 'utf-8'
             soup = BeautifulSoup(r.text, "lxml")
             title = re.sub(rstr,"_",soup.find('title').text)
@@ -56,7 +57,7 @@ try:
                     os.chdir(kwlist[0])
                     if div_item.find("img") is None:
                         continue
-                    img_r = requests.get(urljoin(img_url, div_item.find("img")["src"]),headers=headers, timeout=3)
+                    img_r = requests.get(urljoin(img_url, div_item.find("img")["src"]),headers=headers, timeout=timeout)
                     print(img_r.status_code)
                     if img_r.status_code == 200:
                         pic_name = str(title) + str(count) + '.jpg'#str(random.randint(0, 10000))
@@ -66,7 +67,7 @@ try:
                                 continue
                                 # sys.exit(0)
                         open(pic_name, 'wb').write(img_r.content)
-                        print("Success!" + div_item.text)
+                        print("Success" + re.sub(rstr,"_",div_item.text))
                     # print(div_item.text)
                 pass
 finally:
