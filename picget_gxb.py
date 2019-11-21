@@ -16,6 +16,7 @@ propath = os.getcwd()
 kwlist = ['袭艳春']
 index_list = ['http://www.scio.gov.cn/xwfbh/xwbfbh/index.htm']
 flag = 1
+download_flag = 0
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36 Edge/15.15063'}
 timeout=10
 rstr = r"[\/\\\:\*\?\"\<\>\|]"
@@ -63,11 +64,13 @@ try:
                         pic_name = str(title) + str(count) + '.jpg'#str(random.randint(0, 10000))
                         for root, dirs, files in os.walk(os.getcwd()):
                             if pic_name in files:
+                                download_flag = 1
                                 print("已下载" + pic_name)
                                 continue
                                 # sys.exit(0)
-                        open(pic_name, 'wb').write(img_r.content)
-                        print("Success" + re.sub(rstr,"_",div_item.text))
+                        if download_flag == 0 :
+                            open(pic_name, 'wb').write(img_r.content)
+                            print("Success" + re.sub(rstr,"_",div_item.text))
                     # print(div_item.text)
                 pass
 finally:
