@@ -18,15 +18,17 @@ from op_oracle import *
 # prestige,81
 # LXV0,81
 # rooturl = 'http://1024.c2048ao.pw/'
+requests.packages.urllib3.disable_warnings()
 rooturl = 'http://1024.c2048ao.pw/pw/'
-avkeylist = ['259LUXU','LXV0','LXVS','prestige','古装']
+avkeylist = ['SDDE','259LUXU','LXV0','LXVS','prestige','古装']
 clkeylist = ['最新合集']
 # clkey1 = '日本騎兵'正片大片
 urlkey = 'thread'
-m = 4
+m = 1
 n = 10
-rtpath = os.getcwd()
-r = requests.get(rooturl)
+# rtpath = os.getcwd()
+rtpath = r'D:\\360安全浏览器下载'
+r = requests.get(rooturl,verify=False)
 r.encoding='utf-8'
 soup = BeautifulSoup(r.text, "lxml")
 atags = soup.find_all(['a'])
@@ -53,7 +55,7 @@ def downlaodimg(url,m,n,key,rtpath):
         # os.chdir(keypath)
         # 拼接完整的带页码目标网址
         crurl=url + "&page=" + str(m+x)
-        r = requests.get(crurl)
+        r = requests.get(crurl,verify=False)
         print(crurl)
         r.encoding='utf-8'        
         soup = BeautifulSoup(r.text, "lxml")
@@ -66,7 +68,7 @@ def downlaodimg(url,m,n,key,rtpath):
                 continue
             temp2= title.find('a')['href']
             urlt=urljoin(url, temp2)
-            r = requests.get(urlt)
+            r = requests.get(urlt,verify=False)
             soup = BeautifulSoup(r.text, "lxml")
             # 查找网页文本中是非存在所找关键字
             if key not in r.text:
@@ -91,7 +93,7 @@ def downlaodimg(url,m,n,key,rtpath):
                 temp3 = myimg.find_all("img")
                 for temp4 in temp3:
                     temp5 = temp4["src"]        
-                    ir = requests.get(temp5)
+                    ir = requests.get(temp5,verify=False)
                     if ir.status_code == 200:
                         pic_name = str(t) + '.jpg'
                         open(pic_name, 'wb').write(ir.content)

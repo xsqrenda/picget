@@ -11,14 +11,14 @@ import re,uuid
 # 38114开始页面结构发生变化
 # http://www.scio.gov.cn/xwfbh/xwbfbh/wqfbh/37601/38114/index.htm
 
-filepath = r'C:\\360安全浏览器下载'
+filepath = r'D:\\360安全浏览器下载'
 propath = os.getcwd()
 kwlist = ['袭艳春']
 index_list = ['http://www.scio.gov.cn/xwfbh/xwbfbh/index.htm']
 flag = 1
 download_flag = 0
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36 Edge/15.15063'}
-timeout=10
+timeout=100
 rstr = r"[\/\\\:\*\?\"\<\>\|]"
 try:
     index_item = index_list[0]
