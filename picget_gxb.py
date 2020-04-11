@@ -1,6 +1,7 @@
 ﻿# 国务院新闻办公室新闻发布会
 from bs4 import BeautifulSoup
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 import requests
 import os,random,sys
 from urllib.parse import urljoin
@@ -11,7 +12,7 @@ import re,uuid
 # 38114开始页面结构发生变化
 # http://www.scio.gov.cn/xwfbh/xwbfbh/wqfbh/37601/38114/index.htm
 
-filepath = r'D:\\360安全浏览器下载'
+filepath = os.getcwd()
 propath = os.getcwd()
 kwlist = ['袭艳春']
 index_list = ['http://www.scio.gov.cn/xwfbh/xwbfbh/index.htm']
@@ -36,7 +37,10 @@ try:
             count=0
             news_url = urljoin(index_item, news_item.get('href'))
             os.chdir(propath)
-            driver = webdriver.Chrome()
+            chrome_options = Options()
+            chrome_options.add_argument('--headless')
+            chrome_options.add_argument('--disable-gpu')
+            driver = webdriver.Chrome(chrome_options=chrome_options)
             driver.get(news_url)
             # res = driver.find_element_by_link_text('图片直播')
             img_url = urljoin(news_url,driver.find_element_by_link_text('图片直播').get_attribute('href'))
@@ -66,6 +70,7 @@ try:
                             if pic_name in files:
                                 download_flag = 1
                                 print("已下载" + pic_name)
+                                flag = 0
                                 continue
                                 # sys.exit(0)
                         if download_flag == 0 :

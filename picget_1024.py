@@ -24,14 +24,10 @@ avkeylist = ['SDDE','259LUXU','LXV0','LXVS','prestige','古装']
 clkeylist = ['最新合集']
 # clkey1 = '日本騎兵'正片大片
 urlkey = 'thread'
-<<<<<<< HEAD
-m = 6
-=======
 m = 1
->>>>>>> 17b982e43d8d7bb8311d2bdb2d488d447f575a64
-n = 10
-# rtpath = os.getcwd()
-rtpath = r'D:\\360安全浏览器下载'
+n = 2
+rtpath = os.getcwd()
+# rtpath = r'D:\\360安全浏览器下载'
 r = requests.get(rooturl,verify=False)
 r.encoding='utf-8'
 soup = BeautifulSoup(r.text, "lxml")
