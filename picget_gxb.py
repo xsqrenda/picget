@@ -11,6 +11,9 @@ import re,uuid
 # 本程序处理38114（不含）以后即2018年3月26日开始发布会
 # 38114开始页面结构发生变化
 # http://www.scio.gov.cn/xwfbh/xwbfbh/wqfbh/37601/38114/index.htm
+# 根据2020-06-15发布的《山东省人民政府关于任免袭艳春等工作人员职务的通知》
+# http://www.shandong.gov.cn/art/2020/6/15/art_107851_107498.html
+# 袭艳春为山东省人民政府新闻办公室主任。故该程序暂停。
 
 filepath = os.getcwd()
 propath = os.getcwd()
