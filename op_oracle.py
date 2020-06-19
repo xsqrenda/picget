@@ -1,4 +1,4 @@
-import cx_Oracle,os
+import cx_Oracle,os,datetime
 
 
 def wr_beauty(uid,keyword,url,title):
@@ -6,8 +6,8 @@ def wr_beauty(uid,keyword,url,title):
         os.environ['NLS_LANG'] = "SIMPLIFIED CHINESE_CHINA.AL32UTF8" #设置Oracle语言编码变量，非常重要
         db = cx_Oracle.connect('hr/112510@39.104.235.35:49161/xe')
         cursor = db.cursor()
-        param={'id':uid,'keyword':keyword,'url':url,'title':title}
-        sql="""insert into HR."beauty" values(:id,:keyword,:url,:title)"""
+        param={'id':uid,'keyword':keyword,'url':url,'title':title,'new_time':datetime.datetime.now()}
+        sql="""insert into HR."beauty" values(:id,:keyword,:url,:title,:new_time)"""
         cursor.execute(sql,param)
         db.commit()
         cursor.close()
